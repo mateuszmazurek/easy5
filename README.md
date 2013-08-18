@@ -28,7 +28,7 @@ easy5.Worker(jsonRpcConfig)
 Configure and initialize object.
 
 **config** is object with following properties:
-* **worker**: path to Worker .js file (do not apply this property when creating easy5.Worker object from Worker)
+* **worker**: path to Worker .js file (do not apply this property when creating easy5.Worker object inside Worker .js)
 
 Example:
 
