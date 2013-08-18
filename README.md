@@ -94,7 +94,7 @@ Example:
  
  worker.doSth2(function(data){
   alert(data.someKey); // will alert "value" (see doSth2 function in test.worker.js)
-  worker.doSth3(data.param, function(data){
+  worker.doSth3(data.someKey, function(data){
    alert(data); // will alert "VALUE" (see doSth3 function in test.worker.js)
   });
  });
