@@ -77,7 +77,7 @@ Terminates Web Worker and returns **true**. If this method is called from Web Wo
 ### <a name="WorkerExamples"></a>Examples ###
 <hr />
 
-**test.html**
+**demo.html**
 ```html
 <script type="text/javascript" src="easy5.min.js"></script>
 <script type="text/javascript">
@@ -87,7 +87,7 @@ Terminates Web Worker and returns **true**. If this method is called from Web Wo
  }
 
  var worker = new easy5.Worker({
-  worker: "test.worker.js"
+  worker: "demo.worker.js"
  }, {
   local: {
    doSth: doSth
@@ -103,16 +103,16 @@ Terminates Web Worker and returns **true**. If this method is called from Web Wo
  // now you can call functions in worker like "normal" functions
  
  worker.doSth2(function(data){
-  alert(data.someKey); // will alert "value" (see doSth2 function in test.worker.js)
+  alert(data.someKey); // will alert "value" (see doSth2 function in demo.worker.js)
   worker.doSth3(data.someKey, function(data){
-   alert(data); // will alert "VALUE" (see doSth3 function in test.worker.js)
+   alert(data); // will alert "VALUE" (see doSth3 function in demo.worker.js)
   });
  });
  
 </script>
 ```
 
-**test.worker.js**
+**demo.worker.js**
 
 ```javascript
 importScripts('easy5.min.js');
@@ -138,5 +138,7 @@ var parent = new easy5.Worker({
 
 // now you can call functions in parent window like "normal" functions
 
-parent.doSth(); // will alert "I'm doing something" (see doSth function in test.html)
+parent.doSth(); // will alert "I'm doing something" (see doSth function in demo.html)
 ```
+
+[Live demo](http://mateuszmazurek.github.io/easy5/demo.html)
