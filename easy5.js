@@ -27,7 +27,7 @@ var easy5 = {
 		jsonRpcConfig.local = jsonRpcConfig.local || {};
 		jsonRpcConfig.remote = jsonRpcConfig.remote || {};
 
-		worker = config.worker && !isSelfWorker() ? new Worker(config.worker) : self; // check if code is not running inside Web Worker and there's config.worker property; if so - set worker to new Worker object, otherwise - set it to window object (self)
+		worker = config.worker && !isSelfWorker() ? new Worker(config.worker) : self; // check if code is not running inside Web Worker and there's config.worker property; if so - set worker to new Worker object, otherwise - set it to self (WorkerGlobalScope)
 
 		var returnResult = function(id, result, called){ // return result from Web Worker to parent or vice versa using JSON-RPC protocol; "called" argument is true when function is called from code, not by returning result using "return" keyword
 			worker.postMessage({
