@@ -41,7 +41,7 @@ Example:
 **jsonRpcConfig** is object with following properties:
 * **local**: object with local functions. Key is function name, value is function
 * **remote**: object with remote functions to stub. Key is remote function name, value is object with additional ***options*** or empty ``{}`` object. ***Options*** can have following properties:
-  * **return**: *true* if remote function returns value using ``return`` keyword. In this case you can receive response by adding callback function as ***last argument*** when calling. This callback function won't be applied to remote function (<b><i>last argument</i></b> will be removed). More in [examples](#WorkerExamples).
+  * **return**: *true* if remote function returns value using ``return`` keyword. In this case you can receive response by adding callback function as ***last argument*** when calling. This callback function won't be applied to remote function (<b><i>last argument</i></b> will be removed). More in [examples](#WorkerExamples) (doSth3 function).
 
 Example:
 
