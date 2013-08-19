@@ -15,6 +15,8 @@ Extremely easy communication between Worker and main thread.
 ### <a name="WorkerAPI"></a>API ###
 <hr />
 
+**Constructor**
+
 ```
 easy5.Worker(config, jsonRpcConfig)
 ```
