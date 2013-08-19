@@ -48,8 +48,8 @@ var easy5 = {
 					}
 				}
 				var result = jsonRpcConfig.local[e.data.method].apply(null, e.data.params);
-			 if(result && e.data.hasOwnProperty('id')) // check if local function returned any data and we know where to hand on it
-			 	returnResult(e.data.id, result);
+			 	if(result && e.data.hasOwnProperty('id')) // check if local function returned any data and we know where to hand on it
+			 		returnResult(e.data.id, result);
 			} else if(e.data.hasOwnProperty('result') && callbacks[e.data.id]){
 				callbacks[e.data.id].apply(null, [e.data.result]);
 				callbacks[e.data.id] = null; // function has been already called so we can delete it from callbacks array
