@@ -1,21 +1,23 @@
+/*global WorkerGlobalScope, self*/
+
 var easy5 = {
 
 	Worker: function(){
 
 		var constants = {
 			EASY5_FUNCTION_PREFIX: 'easy5.FUNCTION:'
-		}
+		};
 
 		var isSelfWorker = function(){ // check if code is running inside Worker
 			return typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
 		};
 
 		var args = Array.prototype.slice.call(arguments), // convert arguments passed to constructor into standard JS array
-		    callbacks = [], // stores functions exchanged between Web Worker and its parent
-		    freeCallbacks = [], // stores callbacks free keys
-		    config = {}, // default config value
-		    jsonRpcConfig = {}, // default jsonRpcConfig value
-		    worker; // Web Worker or window object (see line 30)
+			callbacks = [], // stores functions exchanged between Web Worker and its parent
+			freeCallbacks = [], // stores callbacks free keys
+			config = {}, // default config value
+			jsonRpcConfig = {}, // default jsonRpcConfig value
+			worker; // Web Worker or window object (see line 30)
 
 		if(args.length > 1){ // check which version of constructor is used
 			config = args[0];
@@ -35,11 +37,11 @@ var easy5 = {
 				error: null,
 				id: id
 			});
-		}
+		};
 
 		worker.addEventListener('message', function(e){
 			if(e.data.hasOwnProperty('method') && jsonRpcConfig.local.hasOwnProperty(e.data.method)){
-				for(i in e.data.params){
+				for(var i in e.data.params){
 					if(e.data.params.hasOwnProperty(i) && typeof e.data.params[i] === "string" && e.data.params[i].indexOf(constants.EASY5_FUNCTION_PREFIX) === 0){ // check if arg[i] should be converted to function
 						var id = e.data.params[i].split(':').pop();
 						e.data.params[i] = function(){
@@ -48,8 +50,9 @@ var easy5 = {
 					}
 				}
 				var result = jsonRpcConfig.local[e.data.method].apply(null, e.data.params);
-			 	if(result && e.data.hasOwnProperty('id')) // check if local function returned any data and we know where to hand on it
-			 		returnResult(e.data.id, result);
+				if(result && e.data.hasOwnProperty('id')){ // check if local function returned any data and we know where to hand on it
+					returnResult(e.data.id, result);
+				}
 			} else if(e.data.hasOwnProperty('result') && callbacks[e.data.id]){
 				callbacks[e.data.id].apply(null, [e.data.result]);
 				callbacks[e.data.id] = null; // function has been already called so we can delete it from callbacks array
@@ -68,13 +71,13 @@ var easy5 = {
 					id = callbacks.push(args.pop())-1; // there's no free keys, add callback function to the end of callbacks array
 				}
 			}
-			for(i in args){
+			for(var i in args){
 				if(args.hasOwnProperty(i) && typeof args[i] === "function"){ // check if any of args is function; if so - add it to callbacks array and replace this arg with string indicating that receiver should convert it back to function (postMessage() doesn't allow you to send functions, only primitive data types)
 					var fid;
-					if(freeCallbacks.length > 0){     //
-					 fid = freeCallbacks.shift();     //
-					 callbacks[fid] = args[i];        // do almost the same as above
-					} else{                           //
+					if(freeCallbacks.length > 0){      //
+						fid = freeCallbacks.shift();     //
+						callbacks[fid] = args[i];        // do almost the same as above
+					} else{                            //
 						fid = callbacks.push(args[i])-1; //
 					}
 					args[i] = constants.EASY5_FUNCTION_PREFIX+fid;
@@ -87,13 +90,13 @@ var easy5 = {
 			});
 		};
 
-		for(name in jsonRpcConfig.remote){ // "stub" remote functions; it allows you to use remote functions like normal functions (e.g. remote.functionName(arguments))
+		for(var name in jsonRpcConfig.remote){ // "stub" remote functions; it allows you to use remote functions like normal functions (e.g. remote.functionName(arguments))
 			if(jsonRpcConfig.remote.hasOwnProperty(name)){
 				(function(o, name){
 					o[name] = function(){
 						call(name, arguments);
 					};
-			 })(this, name);
+				})(this, name);
 			}
 		}
 
@@ -108,4 +111,4 @@ var easy5 = {
 
 	}
 
-}
+};
