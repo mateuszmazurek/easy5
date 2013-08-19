@@ -1,0 +1,31 @@
+<script type="text/javascript" src="easy5.min.js"></script>
+<script type="text/javascript">
+
+ function doSth(){
+  alert("I'm doing something");
+ }
+
+ var worker = new easy5.Worker({
+  worker: "test.worker.js"
+ }, {
+  local: {
+   doSth: doSth
+  },
+  remote: {
+   doSth2: {},
+   doSth3: {
+    return: true
+   }
+  }
+ });
+ 
+ // now you can call functions in worker like "normal" functions
+ 
+ worker.doSth2(function(data){
+  alert(data.someKey); // will alert "value" (see doSth2 function in test.worker.js)
+  worker.doSth3(data.someKey, function(data){
+   alert(data); // will alert "VALUE" (see doSth3 function in test.worker.js)
+  });
+ });
+ 
+</script>
