@@ -64,6 +64,16 @@ Example:
 }
 ```
 
+<hr />
+
+**Method**
+
+```
+terminate()
+```
+
+Terminates Web Worker and returns **true**. If this method is called from Web Worker instance (Worker .js file) it does nothing and returns **false**.
+
 ### <a name="WorkerExamples"></a>Examples ###
 <hr />
 
@@ -114,7 +124,7 @@ var doSth2 = function(callback){
  });
 };
 
-var parent = easy5.Worker({
+var parent = new easy5.Worker({
  local: {
   doSth2: doSth2,
   doSth3: function(str){
