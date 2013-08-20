@@ -63,7 +63,7 @@ var easy5 = {
 		var call = function(name, args){ // "call" remote function
 			args = Array.prototype.slice.call(args); // convert arguments into standard JS array
 			var id = null; // set id for response to null (default)
-			if(jsonRpcConfig.remote[name].hasOwnProperty('return') && jsonRpcConfig.remote[name].return === true){ // check if remote function is returning result using "return" keyword
+			if(jsonRpcConfig.remote[name].hasOwnProperty('return') && jsonRpcConfig.remote[name].return === true){ // check if remote function should return result using "return" keyword
 				if(freeCallbacks.length > 0){ // check if there are free callbacks keys
 					id = freeCallbacks.shift();
 					callbacks[id] = args.pop();
